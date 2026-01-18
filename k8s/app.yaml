@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: victorymart-app
-        image: fudoshinya/victorymart-app:latest
+        image: fudoshinya/victorymart:latest
         ports:
           - containerPort: 3000
         env:
