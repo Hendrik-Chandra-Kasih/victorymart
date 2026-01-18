@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: victorymart-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: victorymart-app
+  template:
+    metadata:
+      labels:
+        app: victorymart-app
+    spec:
+      containers:
+      - name: victorymart-app
+        image: fudoshinya/victorymart-app:1.0
+        ports:
+          - containerPort: 3000
+        env:
+          - name: DB_HOST
+            value: "mysql"
+          - name: DB_USER
+            value: "root"
+          - name: DB_PASSWORD
+            value: "12345"
+          - name: DB_NAME
+            value: "victorymart"
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "128Mi"
+          limits:
+            cpu: "500m"
+            memory: "256Mi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: victorymart-app
+spec:
+  type: NodePort
+  selector:
+    app: victorymart-app
+  ports:
+    - port: 80
+      targetPort: 3000
+      nodePort: 30002
